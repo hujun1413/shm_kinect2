@@ -30,7 +30,7 @@
   <machine name="localhost" address="localhost" if="$(arg use_machine)"/>
 
   <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager)" args="manager"
-        if="$(arg start_manager)" machine="$(arg machine)" output="screen"/>
+        if="$(arg start_manager)" machine="$(arg machine)" /> <!--output="screen"/>-->
 
   <!-- Nodelet version of kinect2_bridge -->
   <node pkg="nodelet" type="nodelet" name="$(arg base_name)_bridge" machine="$(arg machine)"
@@ -112,5 +112,46 @@
     <param name="queue_size" type="int" value="$(arg queue_size)"/>
   </node>
   
-  <node pkg="kinect2_viewer" type="kinect2_viewer" name="kinect2_viewer_hujun" output="screen"/>
+  <!--<node pkg="kinect2_viewer" type="kinect2_viewer" name="kinect2_viewer_hujun" output="screen"/>-->
+  
+  <node pkg="image_view" type="image_view" name="hd_color_1" respawn="false" output="screen">
+    <remap from="image" to="/kinect2/hd/image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  
+  <node pkg="image_view" type="image_view" name="hd_color_2" respawn="false" output="screen">
+    <remap from="image" to="/kinect2/hd/image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  <node pkg="image_view" type="image_view" name="hd_color_3" respawn="false" output="screen">
+    <remap from="image" to="/kinect2/hd/image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  <node pkg="image_view" type="image_view" name="hd_color_4" respawn="false" output="screen">
+    <remap from="image" to="/kinect2/hd/image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  <node pkg="image_view" type="image_view" name="hd_color_5" respawn="false" output="screen">
+    <remap from="image" to="/kinect2/hd/image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  <node pkg="image_view" type="image_view" name="hd_color_6" respawn="false" output="screen">
+    <remap from="image" to="/kinect2/hd/image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  <node pkg="image_view" type="image_view" name="hd_color_7" respawn="false" output="screen">
+    <remap from="image" to="/kinect2/hd/image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  <node pkg="image_view" type="image_view" name="hd_color_8" respawn="false" output="screen">
+    <remap from="image" to="/kinect2/hd/image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  
+  <node pkg="image_view" type="image_view" name="hd_depth_1" respawn="false" output="screen">
+    <remap from="image" to="/kinect2/sd/image_depth"/>
+    <param name="autosize" value="true" />
+  </node>
+  
+  
 </launch>

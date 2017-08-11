@@ -1027,20 +1027,23 @@ private:
     if(status[COLOR_SD_RECT] || status[DEPTH_SD] || status[DEPTH_SD_RECT] || status[DEPTH_QHD] || status[DEPTH_HD])
     {
       //ir2****************************************construct a mat, then copy the depthFrame date to another cv::Mat depth
-      cv::Mat(depthFrame->height, depthFrame->width, CV_32FC1, depthFrame->data).copyTo(depth);
+      //cv::Mat(depthFrame->height, depthFrame->width, CV_32FC1, depthFrame->data).copyTo(depth);
+      depth = cv::Mat(depthFrame->height, depthFrame->width, CV_32FC1, depthFrame->data); //is different from copyTo
       //cv::Mat(depthFrame->height, depthFrame->width, CV_32FC1, depthFrame->data).copyTo(images[DEPTH_SD]);
     }
 
-    if(status[IR_SD] || status[IR_SD_RECT])
+    /*if(status[IR_SD] || status[IR_SD_RECT])
     {
       ir = cv::Mat(irFrame->height, irFrame->width, CV_32FC1, irFrame->data);
       ir.convertTo(images[IR_SD], CV_16U);
-    }
+    }*/
+    depth.convertTo(images[DEPTH_SD], CV_16U, 1);
+    //printf("---------------------------%p %p\n", (depth.data), (images[DEPTH_SD].data));
 
     listenerIrDepth->release(frames);
     lockIrDepth.unlock();
 
-    processIrDepth(depth, images, status);
+    //processIrDepth(depth, images, status);
 //images[] have been processed to fill a certain type, for example cv:Mat images[DEPTH_SD] = depth
 
     publishImages(images, header, status, frame, pubFrameIrDepth, IR_SD, COLOR_HD);
@@ -1092,36 +1095,36 @@ private:
 
     cv::Mat color = cv::Mat(colorFrame->height, colorFrame->width, CV_8UC4, colorFrame->data);
     //color2****************************************construct a mat, copy the colorFrame date to cv::Mat color
-    if(status[COLOR_SD_RECT])
+    /*if(status[COLOR_SD_RECT])
     {
       lockRegSD.lock();
       memcpy(this->color.data, colorFrame->data, sizeColor.width * sizeColor.height * 4);
       this->color.format = colorFrame->format;
       lockRegSD.unlock();
-    }
-    if(status[COLOR_HD] || status[COLOR_HD_RECT] || status[COLOR_QHD] || status[COLOR_QHD_RECT] ||
-       status[MONO_HD] || status[MONO_HD_RECT] || status[MONO_QHD] || status[MONO_QHD_RECT])
-    {
-      cv::Mat tmp;
-      cv::flip(color, tmp, 1);
+    }*/
+    //if(status[COLOR_HD] || status[COLOR_HD_RECT] || status[COLOR_QHD] || status[COLOR_QHD_RECT] ||
+    //   status[MONO_HD] || status[MONO_HD_RECT] || status[MONO_QHD] || status[MONO_QHD_RECT])
+    //{
+      //cv::Mat tmp;
+      //cv::flip(color, tmp, 1);
       //color3****************************************flip cv::Mat color to cv::Mat tmp
-      if(colorFrame->format == libfreenect2::Frame::BGRX)
-      {
-        cv::cvtColor(tmp, images[COLOR_HD], CV_BGRA2BGR);
-      }
-      else
-      {
-        cv::cvtColor(tmp, images[COLOR_HD], CV_RGBA2BGR);
-      }
+      //if(colorFrame->format == libfreenect2::Frame::BGRX)
+      //{
+        cv::cvtColor(color, images[COLOR_HD], CV_BGRA2BGR);
+      //}
+      //else
+      //{
+      //  cv::cvtColor(color, images[COLOR_HD], CV_RGBA2BGR);
+      //}
       //color4****************************************cv::cvtColor cv::Mat tmp to cv::Mat images[COLOR_HD]
-      //color.copyTo(images[COLOR_HD]);
+      //tmp.copyTo(images[COLOR_HD]);
       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!color no convert and flip
-    }
+    //}
 
     listenerColor->release(frames);
     lockColor.unlock();
 
-    processColor(images, status);
+    //processColor(images, status);
     //color*************************remap or resize or cvtColor, for COLOR_HD, do nothing
 
     publishImages(images, header, status, frame, pubFrameColor, COLOR_HD, COUNT);
