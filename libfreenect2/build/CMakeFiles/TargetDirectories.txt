@@ -1,0 +1,5 @@
+/home/oslab/libfreenect2/build/examples/CMakeFiles/Protonect.dir
+/home/oslab/libfreenect2/build/CMakeFiles/freenect2.dir
+/home/oslab/libfreenect2/build/CMakeFiles/freenect2-openni2.dir
+/home/oslab/libfreenect2/build/CMakeFiles/generate_resources_tool.dir
+/home/oslab/libfreenect2/build/CMakeFiles/install-openni2.dir

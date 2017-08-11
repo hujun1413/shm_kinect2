@@ -1,0 +1,12 @@
+*~
+beginner_tutorials/*
+nao_extras/*
+naoqi_bridge/*
+nao_robot/*
+rbx1/*
+freenect_stack/*
+ros/*
+semparser/*
+shm_transport*
+.vscode/*
+usb_cam/*
