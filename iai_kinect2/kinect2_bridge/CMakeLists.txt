@@ -88,6 +88,7 @@ target_link_libraries(kinect2_bridge
   ${OpenCV_LIBRARIES}
   ${freenect2_LIBRARY}
   ${kinect2_registration_LIBRARY}
+  -lrt
 )
 
 #############

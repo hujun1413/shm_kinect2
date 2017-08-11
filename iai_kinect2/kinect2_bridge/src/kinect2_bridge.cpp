@@ -57,6 +57,8 @@
 #include <kinect2_registration/kinect2_registration.h>
 #include <kinect2_registration/kinect2_console.h>
 
+#include <kinect2_bridge/shm_topic.hpp>
+
 class Kinect2Bridge
 {
 private:
@@ -128,7 +130,9 @@ private:
     BOTH
   };
 
-  std::vector<ros::Publisher> imagePubs, compressedPubs;
+  //std::vector<ros::Publisher> imagePubs, compressedPubs;
+  std::vector<ros::Publisher> compressedPubs;
+  std::vector<shm_transport::Publisher> imagePubs;
   ros::Publisher infoHDPub, infoQHDPub, infoIRPub;
   sensor_msgs::CameraInfo infoHD, infoQHD, infoIR;
   std::vector<Status> status;
@@ -325,6 +329,22 @@ private:
     createCameraInfo();
     initTopics(queueSize, base_name);
 
+    ROS_INFO("starting device...");
+    bool hujun_Color=true, hujun_Depth=true;
+    if(!device->startStreams(hujun_Color, hujun_Depth))
+    {
+      OUT_ERROR("could not start device!");
+    }
+    else
+    {
+      deviceActive = true;
+    }
+    status[2] = RAW;
+    status[7] = RAW;
+
+    this->isSubscribedColor = hujun_Color;
+    this->isSubscribedDepth = hujun_Depth;
+
     return true;
   }
 
@@ -510,12 +530,25 @@ private:
 
     for(size_t i = 0; i < COUNT; ++i)
     {
-      imagePubs[i] = nh.advertise<sensor_msgs::Image>(base_name + topics[i], queueSize, cb, cb);
+      //imagePubs[i] = t.advertise< sensor_msgs::Image >(base_name + topics[i], queueSize, 600*1024*1024);
+      //imagePubs[i] = nh.advertise<sensor_msgs::Image>(base_name + topics[i], queueSize, cb, cb);
+      //imagePubs[i] = nh.advertise<sensor_msgs::Image>(base_name + topics[i], queueSize);
       compressedPubs[i] = nh.advertise<sensor_msgs::CompressedImage>(base_name + topics[i] + K2_TOPIC_COMPRESSED, queueSize, cb, cb);
     }
+    shm_transport::Topic t(nh);
+    shm_transport::Publisher p2 = t.advertise< sensor_msgs::Image >(base_name + topics[2], queueSize, 200*1024*1024);
+ROS_INFO("in initTopics 1");
+    imagePubs[2] = p2;
+ROS_INFO("in initTopics 2");
+    shm_transport::Publisher p7 = t.advertise< sensor_msgs::Image >(base_name + topics[7], queueSize, 200*1024*1024);
+ROS_INFO("in initTopics 3");
+    imagePubs[7] = p7;
+ROS_INFO("in initTopics 4");
+
     infoHDPub = nh.advertise<sensor_msgs::CameraInfo>(base_name + K2_TOPIC_HD + K2_TOPIC_INFO, queueSize, cb, cb);
     infoQHDPub = nh.advertise<sensor_msgs::CameraInfo>(base_name + K2_TOPIC_QHD + K2_TOPIC_INFO, queueSize, cb, cb);
     infoIRPub = nh.advertise<sensor_msgs::CameraInfo>(base_name + K2_TOPIC_SD + K2_TOPIC_INFO, queueSize, cb, cb);
+ROS_INFO("in initTopics out");
   }
 
   bool initDevice(std::string &sensor)
@@ -950,6 +983,7 @@ private:
     int oldNice = nice(0);
     oldNice = nice(19 - oldNice);
 
+    
     for(; running && ros::ok();)
     {
       processedFrame = false;
@@ -1382,14 +1416,15 @@ private:
       case UNSUBCRIBED:
         break;
       case RAW:
-        imagePubs[i].publish(imageMsgs[i]);
+        imagePubs[i].publish(*imageMsgs[i]);
+        //ROS_ERROR("publish image here %d-----------------------------\nimageMsgs.data=%d", i, (int)imageMsgs[i]->data.size());
         //5*******************************publish sensor_msgs::Image* imageMsgs[i]
         break;
       case COMPRESSED:
         compressedPubs[i].publish(compressedMsgs[i]);
         break;
       case BOTH:
-        imagePubs[i].publish(imageMsgs[i]);
+        imagePubs[i].publish(*imageMsgs[i]);
         compressedPubs[i].publish(compressedMsgs[i]);
         break;
       }

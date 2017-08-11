@@ -27,7 +27,7 @@
 #define K2_TF_RGB_OPT_FRAME    "_rgb_optical_frame"
 #define K2_TF_IR_OPT_FRAME     "_ir_optical_frame"
 
-#define K2_TOPIC_HD            "/hd"
+/*#define K2_TOPIC_HD            "/hd"
 #define K2_TOPIC_QHD           "/qhd"
 #define K2_TOPIC_SD            "/sd"
 
@@ -35,10 +35,20 @@
 #define K2_TOPIC_IMAGE_COLOR   "/image_color"
 #define K2_TOPIC_IMAGE_MONO    "/image_mono"
 #define K2_TOPIC_IMAGE_DEPTH   "/image_depth"
-#define K2_TOPIC_IMAGE_IR      "/image_ir"
+#define K2_TOPIC_IMAGE_IR      "/image_ir"*/
 
-#define K2_TOPIC_COMPRESSED    "/compressed"
-#define K2_TOPIC_INFO          "/camera_info"
+#define K2_TOPIC_HD            "_hd"
+#define K2_TOPIC_QHD           "_qhd"
+#define K2_TOPIC_SD            "_sd"
+
+#define K2_TOPIC_IMAGE_RECT    "_rect"
+#define K2_TOPIC_IMAGE_COLOR   "_image_color"
+#define K2_TOPIC_IMAGE_MONO    "_image_mono"
+#define K2_TOPIC_IMAGE_DEPTH   "_image_depth"
+#define K2_TOPIC_IMAGE_IR      "_image_ir"
+
+#define K2_TOPIC_COMPRESSED    "_compressed"
+#define K2_TOPIC_INFO          "_camera_info"
 
 #define K2_CALIB_COLOR         "calib_color.yaml"
 #define K2_CALIB_IR            "calib_ir.yaml"

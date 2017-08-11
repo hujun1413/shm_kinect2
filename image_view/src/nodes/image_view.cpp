@@ -195,11 +195,11 @@ int main(int argc, char **argv)
     }
   }
   ROS_INFO_STREAM("Using transport \"" << transport << "\"");
-  image_transport::ImageTransport it(nh);
-  image_transport::TransportHints hints(transport, ros::TransportHints(), local_nh);
-  image_transport::Subscriber sub = it.subscribe(topic, 1, imageCb, hints);
-  //shm_transport::Topic t(nh);
-  //shm_transport::Subscriber< sensor_msgs::Image > s = t.subscribe(topic, 60, imageCb);
+  //image_transport::ImageTransport it(nh);
+  //image_transport::TransportHints hints(transport, ros::TransportHints(), local_nh);
+  //image_transport::Subscriber sub = it.subscribe(topic, 1, imageCb, hints);
+  shm_transport::Topic t(nh);
+  shm_transport::Subscriber< sensor_msgs::Image > s = t.subscribe(topic, 60, imageCb);
 
   g_pub = local_nh.advertise<sensor_msgs::Image>("output", 1);
 

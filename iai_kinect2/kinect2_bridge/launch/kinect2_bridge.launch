@@ -114,7 +114,7 @@
   
   <!--<node pkg="kinect2_viewer" type="kinect2_viewer" name="kinect2_viewer_hujun" output="screen"/>-->
   
-  <node pkg="image_view" type="image_view" name="hd_color_1" respawn="false" output="screen">
+  <!--<node pkg="image_view" type="image_view" name="hd_color_1" respawn="false" output="screen">
     <remap from="image" to="/kinect2/hd/image_color"/>
     <param name="autosize" value="false" />
   </node>
@@ -151,7 +151,49 @@
   <node pkg="image_view" type="image_view" name="hd_depth_1" respawn="false" output="screen">
     <remap from="image" to="/kinect2/sd/image_depth"/>
     <param name="autosize" value="true" />
+  </node>-->
+  
+  
+  
+  
+  
+  <node pkg="image_view" type="image_view" name="hd_color_1" respawn="false" output="screen">
+    <remap from="image" to="/kinect2_hd_image_color"/>
+    <param name="autosize" value="false" />
   </node>
   
+  <node pkg="image_view" type="image_view" name="hd_color_2" respawn="false" output="screen">
+    <remap from="image" to="/kinect2_hd_image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  <node pkg="image_view" type="image_view" name="hd_color_3" respawn="false" output="screen">
+    <remap from="image" to="/kinect2_hd_image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  <node pkg="image_view" type="image_view" name="hd_color_4" respawn="false" output="screen">
+    <remap from="image" to="/kinect2_hd_image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  <node pkg="image_view" type="image_view" name="hd_color_5" respawn="false" output="screen">
+    <remap from="image" to="/kinect2_hd_image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  <node pkg="image_view" type="image_view" name="hd_color_6" respawn="false" output="screen">
+    <remap from="image" to="/kinect2_hd_image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  <node pkg="image_view" type="image_view" name="hd_color_7" respawn="false" output="screen">
+    <remap from="image" to="/kinect2_hd_image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  <node pkg="image_view" type="image_view" name="hd_color_8" respawn="false" output="screen">
+    <remap from="image" to="/kinect2_hd_image_color"/>
+    <param name="autosize" value="false" />
+  </node>
+  
+  <node pkg="image_view" type="image_view" name="hd_depth_1" respawn="false" output="screen">
+    <remap from="image" to="/kinect2_sd_image_depth"/>
+    <param name="autosize" value="true" />
+  </node>
   
 </launch>
