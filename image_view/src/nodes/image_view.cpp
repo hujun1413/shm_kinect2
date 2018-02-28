@@ -44,7 +44,7 @@
 #include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
 
-#include "shm_topic.hpp"
+//#include "shm_topic.hpp"
 
 int g_count;
 cv::Mat g_last_image;
